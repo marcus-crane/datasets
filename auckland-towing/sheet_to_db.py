@@ -3,6 +3,9 @@ import sys
 
 import pandas as pd
 
+# https://data.linz.govt.nz/layer/53353-nz-street-address/
+
+# implicitly requires openpyxl to be pip installed
 workbook = pd.ExcelFile("towing.xlsx")
 df = pd.DataFrame()
 
