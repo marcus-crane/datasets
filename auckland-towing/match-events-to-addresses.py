@@ -60,19 +60,23 @@ def get_coords(row):
             return float(row['gd2000_ycoord']), float(row['gd2000_xcoord'])
     return None
 
+row_count = 0
+
 with open('trips.csv', 'w') as csvfile:
     fieldnames = ['originx', 'originy', 'origin', 'destinationx', 'destinationy', 'destination']
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
     with open('failures.txt', 'w') as file:
         for row in cur.execute("SELECT DISTINCT Destination, Origin FROM events"):
+            row_count += 1
+            print(row_count)
             destination = get_coords(row['Destination'])
             origin = get_coords(row['Origin'])
             if destination is None or origin is None:
                 file.write(f"No res for {row['Origin'].strip()} -> {row['Destination'].strip()}\n")
                 continue
-            print(destination)
-            print(origin)
+            # print(destination)
+            # print(origin)
             writer.writerow({
                 'originx': origin[0],
                 'originy': origin[1],

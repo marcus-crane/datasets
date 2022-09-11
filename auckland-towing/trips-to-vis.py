@@ -21,6 +21,10 @@ for trip in segments:
     timestamps = [0]
     duration = 0
 
+    if not 'features' in data.keys():
+        print(f'No features block for {trip}')
+        continue
+
     coords = data['features'][0]['geometry']['coordinates']
 
     for entry in coords:
@@ -32,6 +36,8 @@ for trip in segments:
         "path": coords,
         "timestamps": timestamps
     })
+
+    print(len(routes))
 
 with open('routes.json', 'w') as file:
     json.dump(routes, file)
